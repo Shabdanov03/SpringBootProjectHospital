@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>new Doctor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="d-flex justify-content-center">
+    <form class="p-5 bg-light" action="#" th:action="@{/doctors/{hospitalId}/save(hospitalId=${hospitalId})}"
+          th:object="${doctor}" th:method="post">
+
+            <label for="nameInput1" class="form-label">First Name</label>
+            <input type="text" th:field="*{firstName}" id="nameInput1" class="form-control form-control-lg">
+            <div style="color: firebrick" th:if="${#fields.hasErrors('firstName')}">
+                <span th:errors="*{firstName}"> </span>
+                Error
+            </div>
+
+            <label for="nameInput2" class="form-label">Last Name</label>
+            <input type="text" th:field="*{lastName}" id="nameInput2" class="form-control form-control-lg">
+            <div style="color: firebrick" th:if="${#fields.hasErrors('lastName')}">
+                <span th:errors="*{lastName}"> </span>
+                Error
+            </div>
+
+            <label for="nameInput3" class="form-label">Position</label>
+            <input type="text" th:field="*{position}" id="nameInput3" class="form-control form-control-lg">
+            <div style="color: firebrick" th:if="${#fields.hasErrors('position')}">
+                <span th:errors="*{position}"> </span>
+                Error
+            </div>
+
+            <label for="email" class="form-label">email</label>
+            <input type="text" th:field="*{email}" id="email" class="form-control form-control-lg">
+            <div style="color: firebrick" th:if="${#fields.hasErrors('email')}">
+                <span th:errors="*{email}"> </span> Error
+            </div>
+            <div th:if="${Email}"><p style="color: firebrick"> [[${Email}]] </p></div>
+
+
+            <label>
+                <select th:field="*{departmentId}" multiple>
+                    <option th:each="department : ${departments}" th:value="${department.id}"
+                            th:text="${department.name}"></option>
+                </select>
+            </label>
+
+        <div>
+            <input type="submit" value="Save" class="btn btn-primary btn-lg">
+        </div>
+    </form>
+
+
+</div>
+</body>
+</html>

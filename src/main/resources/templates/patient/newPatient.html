@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>new Doctor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="d-flex justify-content-center">
+    <form class="p-5 bg-light" action="#" th:action="@{/patients/{hospitalId}/save(hospitalId=${hospitalId})}"
+          th:object="${newPatient}" th:method="post">
+
+        <div class="form-group">
+            <label for="nameInput1" class="form-label">First Name</label>
+            <input type="text" th:field="*{firstName}" id="nameInput1" class="form-control form-control-lg">
+            <div style="color: firebrick" th:if="${#fields.hasErrors('firstName')}">
+                <span th:errors="*{firstName}"> </span>
+                Error</div>
+        </div>
+
+        <div class="form-group">
+            <label for="nameInput2" class="form-label">Last Name</label>
+            <input type="text" th:field="*{lastName}" id="nameInput2" class="form-control form-control-lg">
+            <div style="color: firebrick" th:if="${#fields.hasErrors('lastName')}">
+                <span th:errors="*{lastName}"> </span>
+                 Error</div>
+        </div>
+
+        <div class="form-group">
+            <label for="nameInput3" class="form-label">Phone Number</label>
+            <input type="text" th:field="*{phoneNumber}" id="nameInput3" class="form-control form-control-lg">
+            <div style="color: firebrick" th:if="${#fields.hasErrors('phoneNumber')}">
+                <span th:errors="*{phoneNumber}"> </span>
+                Error</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Gender</label><br>
+            <input type="radio" id="male" name="gender" value="MALE">
+            <label th:field="*{gender}" for="male">MALE</label><br>
+            <input type="radio" id="female" name="gender" value="FEMALE">
+            <label th:field="*{gender}" for="female">FEMALE</label><br>
+        </div>
+
+        <div class="form-group">
+            <label for="nameInput5" class="form-label">Email</label>
+            <input type="text" th:field="*{email}" id="nameInput5" class="form-control form-control-lg">
+            <div style="color: firebrick" th:if="${#fields.hasErrors('email')}">
+                <span th:errors="*{email}"> </span>
+                 Error
+            </div>
+            <div th:if="${Email}"><p style="color: firebrick"> [[${Email}]] </p></div>
+        </div>
+
+        <!--        <div class="form-group">-->
+        <!--            <label>-->
+        <!--                <select th:field="*{departmentId}">-->
+        <!--                    <option value="">&#45;&#45;Select an departments &#45;&#45;</option>-->
+        <!--                    <option th:each="department : ${departments}" th:value="${department.id}"-->
+        <!--                            th:text="${department.name}"></option>-->
+        <!--                </select>-->
+        <!--            </label>-->
+        <!--        </div>-->
+
+        <div>
+            <input type="submit" value="Save" class="btn btn-primary btn-lg">
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

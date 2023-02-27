@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page Appointment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+          crossorigin="anonymous">
+
+</head>
+<body>
+
+<div class="container mt-3">
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <a th:href="@{/appointments/{hospitalId}/new(hospitalId=${hospitalId})}" class="btn btn-primary"> Add new
+                Appointment </a>
+            <br>
+            <a class="btn btn-primary" th:href="@{/hospitals/{hospitalId}(hospitalId=${hospitalId})}">
+                Exit
+            </a>
+        </tr>
+
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Data</th>
+            <th scope="col">Patients</th>
+            <th scope="col">Departments</th>
+            <th scope="col">Doctors</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="appoint : ${appointments}">
+            <td th:text="${appoint.getDate()}"></td>
+
+            <td th:text="${appoint.getPatient().getFirstName()+' '+ appoint.getPatient().lastName}"></td>
+
+            <td th:text="${appoint.getDepartment().getName()}"></td>
+
+            <td th:text="${appoint.getDoctor().getFirstName()+' '+appoint.getDoctor().lastName}"></td>
+
+            <td>
+                <form th:method="GET"
+                      th:action="@{/appointments/{hospitalId}/{appointmentId}/delete(hospitalId=${hospitalId},appointmentId=${appoint.getId()})}">
+                    <input type="submit" class="btn btn-outline-primary" th:value="  Delete  ">
+                </form>
+            </td>
+
+
+            <td>
+                <form th:method="GET"
+                      th:action="@{/appointments/{hospitalId}/{appId}/edit(hospitalId=${hospitalId},appId=${appoint.getId()})}">
+                    <input type="submit" class="btn btn-outline-primary" th:value=" Edit ">
+                </form>
+            </td>
+
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</html>
+
+
+

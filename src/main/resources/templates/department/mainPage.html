@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Department</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container mt-3">
+    <table class="table table-striped">
+
+        <br>
+        <a th:href="@{/departments/{hospitalId}/new(hospitalId=${hospitalId})}" class="btn btn-primary"> Add new
+            Department </a>
+        <br>
+        <a class="btn btn-primary" th:href="@{/hospitals/{hospitalId}(hospitalId=${hospitalId})}">
+            Exit
+        </a>
+
+        <thead class="thead-dark">
+        <tr>
+            <th>name</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="department : ${departments}">
+            <td th:text="${department.name}"></td>
+
+            <td>
+            <form th:method="GET"
+                  th:action="@{/departments/{hospitalId}/{departmentId}/delete(hospitalId=${hospitalId},departmentId=${department.id})}">
+                <input type="submit" class="btn btn-outline-primary" th:value="  Delete  ">
+            </form>
+            </td>
+            <td>
+            <form th:method="GET"
+                  th:action="@{/departments/{hospitalId}/{departmentId}/edit(hospitalId=${hospitalId},departmentId=${department.getId()})}">
+                <input type="submit" class="btn btn-outline-primary" th:value=" Edit ">
+            </form>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</html>
