@@ -1,8 +1,10 @@
 package peaksoft.api;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.model.Appointment;
 import peaksoft.service.AppointmentService;
@@ -23,7 +25,7 @@ public class AppointmentApi {
     private final DepartmentService departmentService;
 
     @GetMapping("/{hospitalId}")
-    public String getAllDepartments(@PathVariable("hospitalId") Long id, Model model) {
+    public String getAllAppointments(@PathVariable("hospitalId") Long id, Model model) {
         model.addAttribute("appointments", appointmentService.getAllAppointments(id));
         return "appointment/mainPage";
     }
@@ -39,7 +41,14 @@ public class AppointmentApi {
     }
 
     @PostMapping("/{hospitalId}/save")
-    public String saveDepartment(@PathVariable Long hospitalId, @ModelAttribute("newAppointment") Appointment appointment) {
+    public String saveAppointment(@PathVariable Long hospitalId, @ModelAttribute("newAppointment") @Valid
+    Appointment appointment, BindingResult bindingResult,Model model) {
+        if (bindingResult.hasErrors()){
+            model.addAttribute("patients", patientService.getAllPatients(hospitalId));
+            model.addAttribute("doctors", doctorService.getAllDoctors(hospitalId));
+            model.addAttribute("departments", departmentService.getAllDepartments(hospitalId));
+            return "appointment/newAppointment";
+        }
         appointmentService.saveAppointment(appointment, hospitalId);
         return "redirect:/appointments/" + hospitalId;
     }
