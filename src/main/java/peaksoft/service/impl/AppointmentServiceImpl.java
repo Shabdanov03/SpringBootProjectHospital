@@ -34,13 +34,18 @@ public class AppointmentServiceImpl implements AppointmentService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate date = LocalDate.parse(appointment.getInputDate(), formatter);
             oldAppointment.setDate(date);
+
+            if (date.isBefore(LocalDate.now())){
+                throw new RuntimeException();
+            }
             oldAppointment.setPatient(patientRepository.findById(appointment.getPatientId()).get());
             oldAppointment.setDepartment(departmentRepository.findById(appointment.getDepartmentId()).get());
             oldAppointment.setDoctor(doctorRepository.findById(appointment.getDoctorId()).get());
             hospitalRepository.findById(hospitalId).get().getAppointments().add(oldAppointment);
+
             appointmentRepository.save(oldAppointment);
-        } catch (NotFoundException e) {
-            System.out.println(e.getMessage());
+        } catch (RuntimeException e) {
+            throw new RuntimeException();
         }
     }
 
@@ -87,11 +92,14 @@ public class AppointmentServiceImpl implements AppointmentService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate date = LocalDate.parse(appointment.getInputDate(), formatter);
             oldAppointment.setDate(date);
+            if (date.isBefore(LocalDate.now())){
+                throw new RuntimeException();
+            }
             oldAppointment.setPatient(patientRepository.findById(appointment.getPatientId()).get());
             oldAppointment.setDepartment(departmentRepository.findById(appointment.getDepartmentId()).get());
             oldAppointment.setDoctor(doctorRepository.findById(appointment.getDoctorId()).get());
-        } catch (NotFoundException e) {
-            System.out.println(e.getMessage());
+        } catch (RuntimeException e) {
+            throw new RuntimeException();
         }
     }
 }

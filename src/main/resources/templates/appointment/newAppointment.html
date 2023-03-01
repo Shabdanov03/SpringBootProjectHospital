@@ -18,15 +18,15 @@
 <body>
 <div class="d-flex justify-content-center">
     <form class="p-5 bg-light" th:action="@{/appointments/{hospitalId}/save(hospitalId=${hospitalId})}"
-    th:object="${newAppointment}" th:method="post">
+          th:object="${newAppointment}" th:method="post">
 
         <div class="form-group">
             <label for="date" class="form-label">Date</label>
             <input type="date" th:field="*{inputDate}" id="date" class="form-control form-control-lg" required>
         </div>
-        <div style="color: firebrick" th:if="${#fields.hasErrors('inputDate')}">
-            <span th:errors="*{inputDate}"> </span>
-            Error
+        <div style="color:firebrick" th:if="${errorDate}">
+            <span th:errors="${errorDate}"> </span>
+            date can't be past !
         </div>
 
         <div class="form-group">

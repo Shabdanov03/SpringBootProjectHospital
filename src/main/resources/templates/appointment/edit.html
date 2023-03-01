@@ -22,8 +22,11 @@
 
         <div class="form-group">
             <label for="date" class="form-label">Date</label>
-            <input type="date" th:field="*{inputDate}" id="date" name="date"
-                   min="2023-02-21" max="2025-12-31" required>
+            <input type="date" th:field="*{inputDate}" id="date" name="date">
+        </div>
+        <div style="color:firebrick" th:if="${errorDate}">
+            <span th:errors="${errorDate}"> </span>
+            date can't be past !
         </div>
 
         <div class="form-group">
@@ -34,7 +37,6 @@
                 </select>
             </label>
         </div>
-
 
         <div class="form-group">
             <label> select department :
