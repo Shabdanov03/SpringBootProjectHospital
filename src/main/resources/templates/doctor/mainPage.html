@@ -50,6 +50,13 @@
         </form>
       </td>
 
+      <td>
+        <form th:method="GET"
+              th:action="@{/doctors/{hospitalId}/{doctorId}/assignPage(hospitalId=${hospitalId},doctorId=${doctor.getId()})}">
+          <input type="submit" class="btn btn-outline-primary" th:value=" Assign ">
+        </form>
+      </td>
+
 
 
     </tr>

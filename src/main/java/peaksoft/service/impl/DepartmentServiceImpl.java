@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import peaksoft.exception.NotFoundException;
 import peaksoft.model.Appointment;
 import peaksoft.model.Department;
+import peaksoft.model.Doctor;
 import peaksoft.model.Hospital;
 import peaksoft.repository.AppointmentRepository;
 import peaksoft.repository.DepartmentRepository;
+import peaksoft.repository.DoctorRepository;
 import peaksoft.repository.HospitalRepository;
 import peaksoft.service.DepartmentService;
 
@@ -26,6 +28,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final HospitalRepository hospitalRepository;
     private final AppointmentRepository appointmentRepository;
+    private final DoctorRepository doctorRepository;
 
 
     @Transactional
@@ -98,5 +101,16 @@ public class DepartmentServiceImpl implements DepartmentService {
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public List<Department> getAllDepartmentsByHospitalIdAndDoctorId(Long doctorId, Long hospitalId) {
+        List<Department> departments = departmentRepository.getAllDepartments(hospitalId);
+        Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new NotFoundException("Wrong Input !"));
+        List<Department> departmentList = doctor.getDepartments();
+        if (!departments.isEmpty()){
+            departments.removeAll(departmentList);
+        }
+        return departments;
     }
 }

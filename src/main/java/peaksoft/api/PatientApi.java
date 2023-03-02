@@ -50,7 +50,6 @@ public class PatientApi {
             model.addAttribute("Email","This email already exists.");
             return "patient/newPatient";
         }
-
     }
 
     @GetMapping("/{hospitalId}/{patientId}/delete")

@@ -88,6 +88,4 @@ public class AppointmentApi {
         appointmentService.deleteAppointment(appointmentId, hospitalId);
         return "redirect:/appointments/"+hospitalId;
     }
-
-
 }

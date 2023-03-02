@@ -29,7 +29,13 @@ public class Department {
             CascadeType.MERGE,
             CascadeType.REFRESH,
             CascadeType.PERSIST},fetch = FetchType.EAGER)
-    private List<Doctor> doctors= new ArrayList<>();
+    private List<Doctor> doctors ;
+    public void addDoctor(Doctor doctor){
+        if (doctors == null){
+            doctors = new ArrayList<>();
+        }
+        doctors.add(doctor);
+    }
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

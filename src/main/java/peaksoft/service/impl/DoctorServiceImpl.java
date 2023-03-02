@@ -1,11 +1,13 @@
 package peaksoft.service.impl;
 
+import com.fasterxml.jackson.databind.node.LongNode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import peaksoft.exception.NotFoundException;
 import peaksoft.model.Appointment;
+import peaksoft.model.Department;
 import peaksoft.model.Doctor;
 import peaksoft.model.Hospital;
 import peaksoft.repository.AppointmentRepository;
@@ -15,6 +17,7 @@ import peaksoft.repository.HospitalRepository;
 import peaksoft.service.DoctorService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Shabdanov Ilim
@@ -35,8 +38,8 @@ public class DoctorServiceImpl implements DoctorService {
     public void saveDoctor(Doctor doctor, Long hospitalId) {
         try {
             doctor.setHospital(hospitalRepository.findById(hospitalId).get());
-            doctor.getDepartmentId()
-                    .forEach(d -> doctor.addDepartment(departmentRepository.findById(d).get()));
+//            doctor.getDepartmentId()
+//                    .forEach(d -> doctor.addDepartment(departmentRepository.findById(d).get()));
             doctorRepository.save(doctor);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
@@ -99,4 +102,14 @@ public class DoctorServiceImpl implements DoctorService {
         }
     }
 
+    @Override
+    public void assign(Long id, List<Long> departmentId) {
+        Doctor doctor = doctorRepository.findById(id).orElseThrow(()-> new NotFoundException("Not found !"));
+        List<Department> departments = departmentRepository.findAllById(departmentId);
+        for (Department department : departments) {
+            doctor.addDepartment(department);
+            department.addDoctor(doctor);
+        }
+        doctorRepository.save(doctor);
+    }
 }

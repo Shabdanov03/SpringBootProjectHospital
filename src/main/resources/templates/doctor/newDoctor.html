@@ -49,12 +49,12 @@
             <div th:if="${Email}"><p style="color: firebrick"> [[${Email}]] </p></div>
 
 
-            <label>
-                <select th:field="*{departmentId}" multiple>
-                    <option th:each="department : ${departments}" th:value="${department.id}"
-                            th:text="${department.name}"></option>
-                </select>
-            </label>
+<!--            <label>-->
+<!--                <select th:field="*{departmentId}" multiple>-->
+<!--                    <option th:each="department : ${departments}" th:value="${department.id}"-->
+<!--                            th:text="${department.name}"></option>-->
+<!--                </select>-->
+<!--            </label>-->
 
         <div>
             <input type="submit" value="Save" class="btn btn-primary btn-lg">
