@@ -20,10 +20,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Appointment {
     @Id
-    @SequenceGenerator(name = "appointment_gen",sequenceName = "appointment_seq",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "appointment_gen")
+    @SequenceGenerator(name = "appointment_gen", sequenceName = "appointment_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointment_gen")
     private Long id;
-    private LocalDate date ;
+    private LocalDate date;
     @Transient
     private String inputDate;
     @Transient

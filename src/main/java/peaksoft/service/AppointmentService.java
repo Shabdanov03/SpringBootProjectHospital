@@ -8,11 +8,11 @@ import java.util.List;
  * Shabdanov Ilim
  **/
 public interface AppointmentService {
-    void saveAppointment(Appointment appointment,Long hospitalId);
+    void saveAppointment(Appointment appointment, Long hospitalId);
 
     List<Appointment> getAllAppointments(Long id);
 
-    void deleteAppointment(Long id,Long hospitalId);
+    void deleteAppointment(Long id, Long hospitalId);
 
     Appointment findByAppointmentId(Long id);
 

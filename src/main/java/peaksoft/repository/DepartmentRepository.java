@@ -11,7 +11,7 @@ import java.util.List;
  * Shabdanov Ilim
  **/
 
-public interface DepartmentRepository extends JpaRepository<Department,Long> {
+public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
     @Query("from Department d join d.hospital h where h.id=:id")
     List<Department> getAllDepartments(Long id);

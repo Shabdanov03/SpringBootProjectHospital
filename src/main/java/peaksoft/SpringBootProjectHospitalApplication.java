@@ -9,5 +9,4 @@ public class SpringBootProjectHospitalApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringBootProjectHospitalApplication.class, args);
     }
-
 }

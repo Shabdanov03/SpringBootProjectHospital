@@ -2,7 +2,6 @@ package peaksoft.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import peaksoft.exception.NotFoundException;
 import peaksoft.model.Hospital;
@@ -45,9 +44,9 @@ public class HospitalServiceImpl implements HospitalService {
     public List<Hospital> getAllHospitals(String keyWord) {
         try {
             if (keyWord != null && !keyWord.trim().isEmpty()) {
-                return repository.search("%"+keyWord+"%");
+                return repository.search("%" + keyWord + "%");
             } else {
-            return repository.findAll();
+                return repository.findAll();
             }
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
@@ -80,12 +79,10 @@ public class HospitalServiceImpl implements HospitalService {
             Hospital oldHospital = repository.findById(id).get();
             oldHospital.setName(hospital.getName());
             oldHospital.setAddress(hospital.getAddress());
-            oldHospital.setDoctors(hospital.getDoctors());
-            oldHospital.setPatients(hospital.getPatients());
-            oldHospital.setDepartments(hospital.getDepartments());
-            oldHospital.setAppointments(hospital.getAppointments());
+            oldHospital.setImage(hospital.getImage());
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
 }
+

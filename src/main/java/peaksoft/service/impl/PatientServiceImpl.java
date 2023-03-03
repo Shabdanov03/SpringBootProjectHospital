@@ -2,7 +2,6 @@ package peaksoft.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import peaksoft.exception.NotFoundException;
 import peaksoft.model.Appointment;
@@ -42,9 +41,10 @@ public class PatientServiceImpl implements PatientService {
     public List<Patient> getAllPatients(Long id) {
         try {
             return patientRepository.getAllPatient(id);
-        }catch (NotFoundException e){
+        } catch (NotFoundException e) {
             System.out.println(e.getMessage());
-        }return null;
+        }
+        return null;
     }
 
     @Transactional
@@ -54,7 +54,7 @@ public class PatientServiceImpl implements PatientService {
             Patient patient = patientRepository.findById(id).get();
 
             List<Patient> patients = patient.getHospital().getPatients();
-            patients.removeIf(x->x.getId().equals(id));
+            patients.removeIf(x -> x.getId().equals(id));
 
             Hospital hospital = hospitalRepository.findById(patient.getHospital().getId()).get();
             List<Appointment> appointments = hospital.getAppointments();
@@ -75,9 +75,10 @@ public class PatientServiceImpl implements PatientService {
     public Patient findByPatientId(Long id) {
         try {
             return patientRepository.findById(id).get();
-        }catch (NotFoundException e){
+        } catch (NotFoundException e) {
             System.out.println(e.getMessage());
-        }return null;
+        }
+        return null;
     }
 
     @Override

@@ -18,5 +18,5 @@ public interface DepartmentService {
 
     void updateDepartment(Long id, Department department);
 
-    List<Department> getAllDepartmentsByHospitalIdAndDoctorId(Long doctorId,Long hospitalId);
+    List<Department> getAllDepartmentsByHospitalIdAndDoctorId(Long doctorId, Long hospitalId);
 }

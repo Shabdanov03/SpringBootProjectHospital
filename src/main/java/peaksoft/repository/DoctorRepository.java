@@ -10,7 +10,7 @@ import java.util.List;
  * Shabdanov Ilim
  **/
 
-public interface DoctorRepository extends JpaRepository<Doctor,Long> {
+public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     @Query("from Doctor d join d.hospital h where h.id=:id")
     List<Doctor> getAllDoctors(Long id);

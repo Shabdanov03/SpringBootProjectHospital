@@ -35,7 +35,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             LocalDate date = LocalDate.parse(appointment.getInputDate(), formatter);
             oldAppointment.setDate(date);
 
-            if (date.isBefore(LocalDate.now())){
+            if (date.isBefore(LocalDate.now())) {
                 throw new RuntimeException();
             }
             oldAppointment.setPatient(patientRepository.findById(appointment.getPatientId()).get());
@@ -53,9 +53,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<Appointment> getAllAppointments(Long id) {
         try {
             return appointmentRepository.getAllAppointments(id);
-        }catch (NotFoundException e){
+        } catch (NotFoundException e) {
             System.out.println(e.getMessage());
-        }return  null;
+        }
+        return null;
     }
 
     @Transactional
@@ -71,7 +72,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 }
             }
             appointmentRepository.deleteById(id);
-        }catch (NotFoundException e){
+        } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -80,9 +81,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment findByAppointmentId(Long id) {
         try {
             return appointmentRepository.findById(id).get();
-        }catch (NotFoundException e){
+        } catch (NotFoundException e) {
             System.out.println(e.getMessage());
-        }return null;
+        }
+        return null;
     }
 
     @Override
@@ -92,7 +94,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate date = LocalDate.parse(appointment.getInputDate(), formatter);
             oldAppointment.setDate(date);
-            if (date.isBefore(LocalDate.now())){
+            if (date.isBefore(LocalDate.now())) {
                 throw new RuntimeException();
             }
             oldAppointment.setPatient(patientRepository.findById(appointment.getPatientId()).get());

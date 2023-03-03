@@ -1,10 +1,8 @@
 package peaksoft.api;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.model.Appointment;
 import peaksoft.service.AppointmentService;
@@ -31,7 +29,7 @@ public class AppointmentApi {
     }
 
     @GetMapping("/{hospitalId}/new")
-    public String create( @PathVariable Long hospitalId,Model model) {
+    public String create(@PathVariable Long hospitalId, Model model) {
         model.addAttribute("newAppointment", new Appointment());
         model.addAttribute("patients", patientService.getAllPatients(hospitalId));
         model.addAttribute("doctors", doctorService.getAllDoctors(hospitalId));
@@ -41,11 +39,11 @@ public class AppointmentApi {
     }
 
     @PostMapping("/{hospitalId}/save")
-    public String saveAppointment(@PathVariable Long hospitalId, @ModelAttribute("newAppointment")Appointment appointment,Model model) {
+    public String saveAppointment(@PathVariable Long hospitalId, @ModelAttribute("newAppointment") Appointment appointment, Model model) {
         try {
             appointmentService.saveAppointment(appointment, hospitalId);
             return "redirect:/appointments/" + hospitalId;
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             model.addAttribute("newAppointment", new Appointment());
             model.addAttribute("patients", patientService.getAllPatients(hospitalId));
             model.addAttribute("doctors", doctorService.getAllDoctors(hospitalId));
@@ -58,7 +56,7 @@ public class AppointmentApi {
 
     @GetMapping("/{hospitalId}/{id}/edit")
     public String edit(@PathVariable Long hospitalId, @PathVariable Long id, Model model) {
-        model.addAttribute("appointment",appointmentService.findByAppointmentId(id));
+        model.addAttribute("appointment", appointmentService.findByAppointmentId(id));
         model.addAttribute("patients", patientService.getAllPatients(hospitalId));
         model.addAttribute("doctors", doctorService.getAllDoctors(hospitalId));
         model.addAttribute("departments", departmentService.getAllDepartments(hospitalId));
@@ -67,13 +65,13 @@ public class AppointmentApi {
     }
 
     @PostMapping("/{hospitalId}/{id}/update")
-    public String update(@PathVariable Long hospitalId,@PathVariable Long id,
-                         @ModelAttribute Appointment appointment,Model model){
+    public String update(@PathVariable Long hospitalId, @PathVariable Long id,
+                         @ModelAttribute Appointment appointment, Model model) {
         try {
             appointmentService.updateAppointment(id, appointment);
             return "redirect:/appointments/" + hospitalId;
-        }catch (RuntimeException e){
-            model.addAttribute("appointment",appointmentService.findByAppointmentId(id));
+        } catch (RuntimeException e) {
+            model.addAttribute("appointment", appointmentService.findByAppointmentId(id));
             model.addAttribute("patients", patientService.getAllPatients(hospitalId));
             model.addAttribute("doctors", doctorService.getAllDoctors(hospitalId));
             model.addAttribute("departments", departmentService.getAllDepartments(hospitalId));
@@ -86,6 +84,6 @@ public class AppointmentApi {
     @GetMapping("/{hospitalId}/{appointmentId}/delete")
     public String delete(@PathVariable("appointmentId") Long appointmentId, @PathVariable("hospitalId") Long hospitalId) {
         appointmentService.deleteAppointment(appointmentId, hospitalId);
-        return "redirect:/appointments/"+hospitalId;
+        return "redirect:/appointments/" + hospitalId;
     }
 }

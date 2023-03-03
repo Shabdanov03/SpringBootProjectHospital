@@ -2,7 +2,6 @@ package peaksoft.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import peaksoft.exception.NotFoundException;
 import peaksoft.model.Appointment;
@@ -108,7 +107,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         List<Department> departments = departmentRepository.getAllDepartments(hospitalId);
         Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new NotFoundException("Wrong Input !"));
         List<Department> departmentList = doctor.getDepartments();
-        if (!departments.isEmpty()){
+        if (!departments.isEmpty()) {
             departments.removeAll(departmentList);
         }
         return departments;

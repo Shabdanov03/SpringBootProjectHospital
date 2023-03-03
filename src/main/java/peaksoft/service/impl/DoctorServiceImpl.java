@@ -1,9 +1,7 @@
 package peaksoft.service.impl;
 
-import com.fasterxml.jackson.databind.node.LongNode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import peaksoft.exception.NotFoundException;
 import peaksoft.model.Appointment;
@@ -17,7 +15,6 @@ import peaksoft.repository.HospitalRepository;
 import peaksoft.service.DoctorService;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Shabdanov Ilim
@@ -38,8 +35,6 @@ public class DoctorServiceImpl implements DoctorService {
     public void saveDoctor(Doctor doctor, Long hospitalId) {
         try {
             doctor.setHospital(hospitalRepository.findById(hospitalId).get());
-//            doctor.getDepartmentId()
-//                    .forEach(d -> doctor.addDepartment(departmentRepository.findById(d).get()));
             doctorRepository.save(doctor);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
@@ -63,7 +58,7 @@ public class DoctorServiceImpl implements DoctorService {
             Doctor doctor = doctorRepository.findById(id).get();
 
             List<Doctor> doctors = doctor.getHospital().getDoctors();
-            doctors.removeIf(x->x.getId().equals(id));
+            doctors.removeIf(x -> x.getId().equals(id));
 
             Hospital hospital = hospitalRepository.findById(doctor.getHospital().getId()).get();
             List<Appointment> appointments = hospital.getAppointments();
@@ -91,20 +86,20 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void updateDoctor(Long id, Doctor doctor) {
-        try{
+        try {
             Doctor oldDoctor = doctorRepository.findById(id).get();
             oldDoctor.setFirstName(doctor.getLastName());
             oldDoctor.setLastName(doctor.getLastName());
             oldDoctor.setPosition(doctor.getPosition());
             oldDoctor.setEmail(doctor.getEmail());
-        }catch (NotFoundException e){
+        } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
 
     @Override
     public void assign(Long id, List<Long> departmentId) {
-        Doctor doctor = doctorRepository.findById(id).orElseThrow(()-> new NotFoundException("Not found !"));
+        Doctor doctor = doctorRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found !"));
         List<Department> departments = departmentRepository.findAllById(departmentId);
         for (Department department : departments) {
             doctor.addDepartment(department);

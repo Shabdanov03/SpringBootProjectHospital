@@ -18,6 +18,6 @@ public interface DoctorService {
 
     void updateDoctor(Long id, Doctor doctor);
 
-    void assign(Long id,List<Long> departmentId);
+    void assign(Long id, List<Long> departmentId);
 
 }

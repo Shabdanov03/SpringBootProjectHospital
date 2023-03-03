@@ -38,7 +38,6 @@ public class DoctorApi {
     public String create(@PathVariable("hospitalId") Long id, Model model) {
         model.addAttribute("hospitalId", id);
         model.addAttribute("doctor", new Doctor());
-//        model.addAttribute("departments", departmentService.getAllDepartments(id));
         return "doctor/newDoctor";
     }
 
@@ -46,7 +45,6 @@ public class DoctorApi {
     public String save(@PathVariable("hospitalId") Long id, @ModelAttribute("doctor") @Valid Doctor doctor,
                        BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-//            model.addAttribute("departments", departmentService.getAllDepartments(id));
             return "doctor/newDoctor";
         }
         try {
@@ -54,7 +52,6 @@ public class DoctorApi {
             return "redirect:/doctors/" + id;
         } catch (DataIntegrityViolationException e) {
             model.addAttribute("hospitalId", id);
-//            model.addAttribute("departments", departmentService.getAllDepartments(id));
             model.addAttribute("Email", "This email already exists.");
             return "doctor/newDoctor";
         }
@@ -92,17 +89,17 @@ public class DoctorApi {
 
     @GetMapping("/{hospitalId}/{doctorId}/assignPage")
     public String assignPage(@PathVariable("hospitalId") Long hospitalId,
-                         @PathVariable Long doctorId, Model model) {
-        model.addAttribute("hospitalId",hospitalId);
-        model.addAttribute("doctor",doctorService.findByDoctorId(doctorId));
-        model.addAttribute("departments", departmentService.getAllDepartmentsByHospitalIdAndDoctorId(doctorId,hospitalId));
+                             @PathVariable Long doctorId, Model model) {
+        model.addAttribute("hospitalId", hospitalId);
+        model.addAttribute("doctor", doctorService.findByDoctorId(doctorId));
+        model.addAttribute("departments", departmentService.getAllDepartmentsByHospitalIdAndDoctorId(doctorId, hospitalId));
         return "doctor/assignPage";
     }
 
     @PostMapping("/{hospitalId}/{doctorId}/assign")
-    public String  assign (@PathVariable Long hospitalId,@PathVariable Long doctorId,@RequestParam List<Long> departmentsId){
-       doctorService.assign(doctorId,departmentsId);
-        return "redirect:/doctors/"+hospitalId;
+    public String assign(@PathVariable Long hospitalId, @PathVariable Long doctorId, @RequestParam List<Long> departmentsId) {
+        doctorService.assign(doctorId, departmentsId);
+        return "redirect:/doctors/" + hospitalId;
     }
 
 }

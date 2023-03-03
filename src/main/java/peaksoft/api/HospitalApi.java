@@ -21,9 +21,9 @@ public class HospitalApi {
     private final HospitalService hospitalService;
 
     @GetMapping
-    public String getAllHospitals(Model model,@RequestParam(name = "keyWord",required = false) String keyWord) {
-        model.addAttribute("keyWord",keyWord);
-        model.addAttribute("hospitals",hospitalService.getAllHospitals(keyWord));
+    public String getAllHospitals(Model model, @RequestParam(name = "keyWord", required = false) String keyWord) {
+        model.addAttribute("keyWord", keyWord);
+        model.addAttribute("hospitals", hospitalService.getAllHospitals(keyWord));
         return "hospital/mainPage";
     }
 

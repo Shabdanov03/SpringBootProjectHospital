@@ -11,6 +11,7 @@ public interface HospitalService {
     void saveHospital(Hospital hospital);
 
     List<Hospital> getAllHospitals();
+
     List<Hospital> getAllHospitals(String keyWord);
 
     void deleteHospital(Long id);
