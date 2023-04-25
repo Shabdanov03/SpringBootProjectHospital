@@ -39,7 +39,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                     throw new NotFoundException(" Such a department already exists ");
                 }
             }
-            department.setHospital(hospitalRepository.findById(hospitalId).get());
+            department.setHospital(hospitalRepository.findById(hospitalId).orElseThrow(IllegalArgumentException::new));
             departmentRepository.save(department);
 
         } catch (NotFoundException e) {
@@ -61,11 +61,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public void deleteDepartment(Long id) {
         try {
-            Department department = departmentRepository.findById(id).get();
+            Department department = departmentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
             for (int i = 0; i < department.getDoctors().size(); i++) {
                 department.getDoctors().get(i).getDepartments().remove(department);
             }
-            Hospital hospital = hospitalRepository.findById(department.getHospital().getId()).get();
+            Hospital hospital = hospitalRepository.findById(department.getHospital().getId()).orElseThrow(IllegalArgumentException::new);
             List<Appointment> appointments = hospital.getAppointments();
             for (Appointment appointment : appointments) {
                 if (appointment.getDepartment().getId().equals(id)) {
@@ -85,7 +85,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department findByDepartmentId(Long id) {
         try {
-            return departmentRepository.findById(id).get();
+            return departmentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -95,7 +95,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public void updateDepartment(Long id, Department department) {
         try {
-            Department oldDepartment = departmentRepository.findById(id).get();
+            Department oldDepartment = departmentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
             oldDepartment.setName(department.getName());
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());

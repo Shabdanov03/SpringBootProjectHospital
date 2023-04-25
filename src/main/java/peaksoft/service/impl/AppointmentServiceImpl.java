@@ -38,10 +38,10 @@ public class AppointmentServiceImpl implements AppointmentService {
             if (date.isBefore(LocalDate.now())) {
                 throw new RuntimeException();
             }
-            oldAppointment.setPatient(patientRepository.findById(appointment.getPatientId()).get());
-            oldAppointment.setDepartment(departmentRepository.findById(appointment.getDepartmentId()).get());
-            oldAppointment.setDoctor(doctorRepository.findById(appointment.getDoctorId()).get());
-            hospitalRepository.findById(hospitalId).get().getAppointments().add(oldAppointment);
+            oldAppointment.setPatient(patientRepository.findById(appointment.getPatientId()).orElseThrow(IllegalArgumentException::new));
+            oldAppointment.setDepartment(departmentRepository.findById(appointment.getDepartmentId()).orElseThrow(IllegalArgumentException::new));
+            oldAppointment.setDoctor(doctorRepository.findById(appointment.getDoctorId()).orElseThrow(IllegalArgumentException::new));
+            hospitalRepository.findById(hospitalId).orElseThrow(IllegalArgumentException::new).getAppointments().add(oldAppointment);
 
             appointmentRepository.save(oldAppointment);
         } catch (RuntimeException e) {
@@ -63,7 +63,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public void deleteAppointment(Long id, Long hospitalId) {
         try {
-            Hospital hospital = hospitalRepository.findById(hospitalId).get();
+            Hospital hospital = hospitalRepository.findById(hospitalId).orElseThrow(IllegalArgumentException::new);
             if (hospital.getAppointments() != null) {
                 for (int i = 0; i < hospital.getAppointments().size(); i++) {
                     if (hospital.getAppointments().get(i).getId().equals(id)) {
@@ -80,7 +80,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment findByAppointmentId(Long id) {
         try {
-            return appointmentRepository.findById(id).get();
+            return appointmentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -90,16 +90,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public void updateAppointment(Long id, Appointment appointment) {
         try {
-            Appointment oldAppointment = appointmentRepository.findById(id).get();
+            Appointment oldAppointment = appointmentRepository.findById(id).orElseThrow(IllegalArgumentException::new);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate date = LocalDate.parse(appointment.getInputDate(), formatter);
             oldAppointment.setDate(date);
             if (date.isBefore(LocalDate.now())) {
                 throw new RuntimeException();
             }
-            oldAppointment.setPatient(patientRepository.findById(appointment.getPatientId()).get());
-            oldAppointment.setDepartment(departmentRepository.findById(appointment.getDepartmentId()).get());
-            oldAppointment.setDoctor(doctorRepository.findById(appointment.getDoctorId()).get());
+            oldAppointment.setPatient(patientRepository.findById(appointment.getPatientId()).orElseThrow(IllegalArgumentException::new));
+            oldAppointment.setDepartment(departmentRepository.findById(appointment.getDepartmentId()).orElseThrow(IllegalArgumentException::new));
+            oldAppointment.setDoctor(doctorRepository.findById(appointment.getDoctorId()).orElseThrow(IllegalArgumentException::new));
         } catch (RuntimeException e) {
             throw new RuntimeException();
         }

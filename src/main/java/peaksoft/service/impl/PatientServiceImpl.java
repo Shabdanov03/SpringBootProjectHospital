@@ -30,7 +30,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void savePatient(Patient patient, Long hospitalId) {
         try {
-            patient.setHospital(hospitalRepository.findById(hospitalId).get());
+            patient.setHospital(hospitalRepository.findById(hospitalId).orElseThrow(IllegalArgumentException::new));
             patientRepository.save(patient);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
@@ -51,12 +51,12 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deletePatient(Long id) {
         try {
-            Patient patient = patientRepository.findById(id).get();
+            Patient patient = patientRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
             List<Patient> patients = patient.getHospital().getPatients();
             patients.removeIf(x -> x.getId().equals(id));
 
-            Hospital hospital = hospitalRepository.findById(patient.getHospital().getId()).get();
+            Hospital hospital = hospitalRepository.findById(patient.getHospital().getId()).orElseThrow(IllegalArgumentException::new);
             List<Appointment> appointments = hospital.getAppointments();
             for (Appointment appointment : appointments) {
                 if (appointment.getPatient().getId().equals(id)) {
@@ -74,7 +74,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient findByPatientId(Long id) {
         try {
-            return patientRepository.findById(id).get();
+            return patientRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -84,7 +84,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void updatePatient(Long id, Patient patient) {
         try {
-            Patient oldPatient = patientRepository.findById(id).get();
+            Patient oldPatient = patientRepository.findById(id).orElseThrow(IllegalArgumentException::new);
             oldPatient.setFirstName(patient.getFirstName());
             oldPatient.setLastName(patient.getLastName());
             oldPatient.setPhoneNumber(patient.getPhoneNumber());

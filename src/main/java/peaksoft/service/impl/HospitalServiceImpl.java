@@ -66,7 +66,7 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public Hospital findByHospitalId(Long id) {
         try {
-            return repository.findById(id).get();
+            return repository.findById(id).orElseThrow(IllegalArgumentException::new);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -76,7 +76,7 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public void updateHospital(Long id, Hospital hospital) {
         try {
-            Hospital oldHospital = repository.findById(id).get();
+            Hospital oldHospital = repository.findById(id).orElseThrow(IllegalArgumentException::new);
             oldHospital.setName(hospital.getName());
             oldHospital.setAddress(hospital.getAddress());
             oldHospital.setImage(hospital.getImage());

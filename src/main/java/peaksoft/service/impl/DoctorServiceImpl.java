@@ -34,7 +34,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public void saveDoctor(Doctor doctor, Long hospitalId) {
         try {
-            doctor.setHospital(hospitalRepository.findById(hospitalId).get());
+            doctor.setHospital(hospitalRepository.findById(hospitalId).orElseThrow(IllegalArgumentException::new));
             doctorRepository.save(doctor);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
@@ -55,7 +55,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public void deleteDoctor(Long id) {
         try {
-            Doctor doctor = doctorRepository.findById(id).get();
+            Doctor doctor = doctorRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
             List<Doctor> doctors = doctor.getHospital().getDoctors();
             doctors.removeIf(x -> x.getId().equals(id));
@@ -77,7 +77,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public Doctor findByDoctorId(Long id) {
         try {
-            return doctorRepository.findById(id).get();
+            return doctorRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -87,7 +87,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public void updateDoctor(Long id, Doctor doctor) {
         try {
-            Doctor oldDoctor = doctorRepository.findById(id).get();
+            Doctor oldDoctor = doctorRepository.findById(id).orElseThrow(IllegalArgumentException::new);
             oldDoctor.setFirstName(doctor.getLastName());
             oldDoctor.setLastName(doctor.getLastName());
             oldDoctor.setPosition(doctor.getPosition());
